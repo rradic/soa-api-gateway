@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY target/administrator-service-1.0.1.jar app.jar
 
-EXPOSE 7000
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
