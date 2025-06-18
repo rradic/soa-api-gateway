@@ -23,7 +23,7 @@ public class AuthenticationEntryPoint implements ServerAuthenticationEntryPoint 
 
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
-        log.warn("Authentication failure for path: {}", exchange.getRequest().getPath());
+//        log.warn("Authentication failure for path: {}", exchange.getRequest().getPath());
 
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
@@ -38,7 +38,7 @@ public class AuthenticationEntryPoint implements ServerAuthenticationEntryPoint 
         try {
             responseBytes = objectMapper.writeValueAsBytes(responseBody);
         } catch (JsonProcessingException ex) {
-            log.error("Error writing JSON response", ex);
+//            log.error("Error writing JSON response", ex);
             return Mono.error(ex);
         }
 

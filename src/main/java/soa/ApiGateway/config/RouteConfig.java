@@ -4,6 +4,8 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 public class RouteConfig {
@@ -48,13 +50,13 @@ public class RouteConfig {
                         .uri("http://localhost:8084"))
 
                 // Public routes - accessible by all authenticated users
-                .route("public-service-route", r -> r
-                        .path("/api/public/**")
-                        .filters(f -> f
-                                .rewritePath("/api/public/(?<segment>.*)", "/${segment}")
-                                .addRequestHeader("X-Gateway-Timestamp", String.valueOf(System.currentTimeMillis()))
-                        )
-                        .uri("http://localhost:8085"))
+//                .route("public-service-route", r -> r
+//                        .path("/api/public/**")
+//                        .filters(f -> f
+//                                .rewritePath("/api/public/(?<segment>.*)", "/${segment}")
+//                                .addRequestHeader("X-Gateway-Timestamp", String.valueOf(System.currentTimeMillis()))
+//                        )
+//                        .uri("http://localhost:8085"))
 
                 .build();
     }

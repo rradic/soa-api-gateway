@@ -19,13 +19,18 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        String path = request.getURI().getPath();
+
+        if (path.startsWith("/api/public")) {
+            return chain.filter(exchange); // Skip filtering for /api/public
+        }
         return ReactiveSecurityContextHolder.getContext()
                 .map(context -> context.getAuthentication())
                 .flatMap(authentication -> {
                     ServerHttpRequest mutatedRequest = mutateRequestWithAuthInfo(exchange.getRequest(), authentication);
                     return chain.filter(exchange.mutate().request(mutatedRequest).build());
-                })
-                .switchIfEmpty(chain.filter(exchange));
+                }).switchIfEmpty(chain.filter(exchange));
     }
 
     private ServerHttpRequest mutateRequestWithAuthInfo(ServerHttpRequest request, Authentication authentication) {
