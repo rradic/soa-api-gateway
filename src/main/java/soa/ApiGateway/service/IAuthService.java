@@ -8,7 +8,7 @@ public interface IAuthService {
 
     TokenInfo login(String username, String password) throws IOException, InterruptedException;
 
-    void register(String username, String email, String password, String firstName, String lastName);
+    void register(String username, String email, String password, String firstName, String lastName) throws IOException, InterruptedException;
 
     void googleLogin(String googleToken);
 

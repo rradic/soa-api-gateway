@@ -3,6 +3,7 @@ package soa.ApiGateway.service;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import org.springframework.stereotype.Service;
+import soa.ApiGateway.Classes.ApiRegistrationClass;
 import soa.ApiGateway.Classes.TokenInfo;
 
 import java.io.IOException;
@@ -32,7 +33,8 @@ public class KeyCloakService implements IKeyCloakService {
     // For example, methods to create users, authenticate, etc.
 
     @Override
-    public void createUser(String username, String email, String password) {
+    public void createUser(ApiRegistrationClass apiRegistrationClass) throws IOException, InterruptedException, IllegalArgumentException {
+
         // Implementation for creating a user in KeyCloak
     }
 

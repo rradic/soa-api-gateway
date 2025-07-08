@@ -3,6 +3,7 @@ package soa.ApiGateway.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import soa.ApiGateway.Classes.ApiRegistrationClass;
 import soa.ApiGateway.Classes.TokenInfo;
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ public class AuthenticationService  implements IAuthService {
     }
 
     @Override
-    public void register(String username, String email, String password, String firstName, String lastName) {
-
+    public void register(String username, String email, String password, String firstName, String lastName) throws IOException, InterruptedException {
+        keycloakService.createUser(new ApiRegistrationClass(username, email, password, firstName, lastName));
     }
 
     @Override
