@@ -14,6 +14,7 @@ public class ApiRegistrationClass {
     private boolean emailVerified;
     private boolean enabled;
     private Credentials[] credentials;
+    private String[] realmRoles = {"manager"};
 
     @Getter
     @Setter

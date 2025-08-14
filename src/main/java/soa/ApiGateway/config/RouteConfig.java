@@ -23,31 +23,39 @@ public class RouteConfig {
 //                        .uri("localhost:8082"))
 
                 // User management routes - accessible by ADMIN or USER_MANAGER roles
-                .route("user-service-route", r -> r
+                .route("employee-service-route", r -> r
                         .path("/api/users/**")
                         .filters(f -> f
                                 .rewritePath("/api/users/(?<segment>.*)", "/${segment}")
                                 .addRequestHeader("X-Gateway-Timestamp", String.valueOf(System.currentTimeMillis()))
                         )
-                        .uri("http://localhost:8082"))
+                        .uri(System.getenv("employee_service_url")))
 
                 // Product routes - accessible by ADMIN or PRODUCT_MANAGER roles
-                .route("product-service-route", r -> r
+                .route("company-service-route", r -> r
                         .path("/api/products/**")
                         .filters(f -> f
                                 .rewritePath("/api/products/(?<segment>.*)", "/${segment}")
                                 .addRequestHeader("X-Gateway-Timestamp", String.valueOf(System.currentTimeMillis()))
                         )
-                        .uri("http://localhost:8083"))
+                        .uri(System.getenv("company_service_url")))
 
                 // Order routes - accessible by ADMIN or SALES roles
-                .route("order-service-route", r -> r
+                .route("analytic-service-route", r -> r
                         .path("/api/orders/**")
                         .filters(f -> f
                                 .rewritePath("/api/orders/(?<segment>.*)", "/${segment}")
                                 .addRequestHeader("X-Gateway-Timestamp", String.valueOf(System.currentTimeMillis()))
                         )
-                        .uri("http://localhost:8084"))
+                        .uri(System.getenv("analytic_service_url")))
+
+                .route("payment-service-route", r -> r
+                        .path("/api/orders/**")
+                        .filters(f -> f
+                                .rewritePath("/api/orders/(?<segment>.*)", "/${segment}")
+                                .addRequestHeader("X-Gateway-Timestamp", String.valueOf(System.currentTimeMillis()))
+                        )
+                        .uri(System.getenv("payment_service_url")))
 
                 // Public routes - accessible by all authenticated users
 //                .route("public-service-route", r -> r

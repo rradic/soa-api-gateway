@@ -1,12 +1,12 @@
 package soa.ApiGateway.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import soa.ApiGateway.Classes.ApiRegistrationClass;
 import soa.ApiGateway.Classes.TokenInfo;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Service
 public class AuthenticationService  implements IAuthService {
@@ -15,13 +15,14 @@ public class AuthenticationService  implements IAuthService {
     private IKeyCloakService keycloakService;
 
     @Override
-    public TokenInfo login(String username, String password) throws IOException, InterruptedException, IllegalArgumentException {
-        return keycloakService.authenticateUser(username, password);
+    public TokenInfo login(String email, String password) throws IOException, InterruptedException, IllegalArgumentException {
+        return keycloakService.authenticateUser(email, password);
     }
 
     @Override
-    public void register(String username, String email, String password, String firstName, String lastName) throws IOException, InterruptedException {
+    public TokenInfo register(String username, String email, String password, String firstName, String lastName) throws IOException, InterruptedException {
         keycloakService.createUser(new ApiRegistrationClass(username, email, password, firstName, lastName));
+        return keycloakService.authenticateUser(email, password);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class AuthenticationService  implements IAuthService {
     }
 
     @Override
-    public void logout() {
-
+    public void logout(String token) throws IOException, URISyntaxException, InterruptedException {
+        keycloakService.logout(token);
     }
 }
